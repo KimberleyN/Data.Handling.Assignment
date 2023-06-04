@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HealthBarScript : MonoBehaviour
+{
+    Slider healthBar;
+    float health;
+    float maxHealth = 100;
+
+    private void Start()
+    {
+        health = maxHealth;
+        healthBar = GetComponent<Slider>();
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+    }
+
+    private void Update()
+    {
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+
+        health -= 0.01f;
+        healthBar.value = health;
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Heal(float healingPoints)
+    {
+        if (health < maxHealth)
+        {
+            health += healingPoints;
+        }
+    }
+ 
+}

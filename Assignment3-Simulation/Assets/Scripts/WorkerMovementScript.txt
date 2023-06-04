@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WorkerMovementScript : MonoBehaviour
+{
+    bool wasJustClicked = true;
+    bool canMove;
+    Vector2 workerSize;
+
+    void Start()
+    {
+        workerSize = gameObject.GetComponent<SpriteRenderer>().bounds.extents;
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            if (wasJustClicked)
+            {
+                wasJustClicked = false;
+
+                if ((mousePos.x >= transform.position.x && mousePos.x < transform.position.x + workerSize.x ||
+                     mousePos.x <= transform.position.x && mousePos.x > transform.position.x - workerSize.x) &&
+                    (mousePos.y >= transform.position.y && mousePos.y < transform.position.y + workerSize.y ||
+                     mousePos.y <= transform.position.y && mousePos.y > transform.position.y - workerSize.y))
+                {
+                    canMove = true;
+                }
+                else
+                {
+                    canMove = false;
+                }
+            }
+            if (canMove)
+            {
+                transform.position = mousePos;
+            }
+        }
+        else
+        {
+            wasJustClicked = true;
+        }
+    }
+}
